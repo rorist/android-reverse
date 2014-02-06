@@ -15,8 +15,9 @@
     * What to exploit ?
         * Use tcpdump
         * Use Dalvik Debug Monitor Server (DDMS)
-    * Code Injection using hijack
-    * Android API method hooks
+    * Attacks
+        * Code Injection using hijack
+        * Android API method hooks
 
 # Introduction to APK format
 
@@ -30,18 +31,14 @@
     * classes.dex           Application code in Dalvik bytecode
     * resources.asc         Compiled resources (strings, images, ...)
 
-# Static analysis
-
-## Introduction to the Dalvik bytecode
+# Introduction to the Dalvik bytecode
 
 * Java source code is compiled to Java bytecode (with javac) and then compiled to Dalvik bytecode (with dx)
 * Dalvik has some optimisations with memory consumption in mind
     * No stack, direct access to variables
     * FIXME
 
----
-
-## Introduction to Smali
+# Introduction to Smali
 
 * Smali is inspired by the official DEX representation format (optained with dexdump)
 
@@ -94,9 +91,7 @@ $ less out/ch/fixme/workshop/MainActivity.smali
 ...
 ```
 
----
-
-## Decompress resources and decompile to Smali
+# Decompress resources and decompile to Smali
 
 * Install the latest apktool, which does everything in one go
 
@@ -125,16 +120,14 @@ I: Copying unknown files/dir...
 I: Copying original files...
 ```
 
----
-
-## Modify Smali code
+# Modify Smali code
 
 * Open a Smali file
 * FIXME
 
-## Repackage application (compile, sign)
+# Repackage application (compile, sign)
 
-## Look at the code with jd-gui (Java Decompiler) and dex2jar
+# Look at the code with jd-gui (Java Decompiler) and dex2jar
 
 ```
 $ ~/android/dex2jar-0.0.7.11/dex2jar.sh ./insOTP.apk
@@ -145,12 +138,11 @@ $ ~/android/dex2jar-0.0.7.11/dex2jar.sh ./insOTP.apk
 $ ~/android/jd-gui insOTP_dex2jar.jar
 ```
 
-#Dynamic analysis
-
-## Introduction to Dynamic Dalvik Instrumentation (DDI)
-## What to exploit ?
+# Introduction to Dynamic Dalvik Instrumentation (DDI)
+# What to exploit ?
 ## Use tcpdump
 ## Use Dalvik Debug Monitor Server (DDMS)
+# Attacks
 ## Code Injection using hijack
 ## Android API method hooks
 
