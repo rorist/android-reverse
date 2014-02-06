@@ -1,6 +1,6 @@
 % Android reverse engineering
 % Jean-Baptiste (Rorist) Aubort
-% 2014-02-13 at FIXME
+% \today
 
 # Summary
 
@@ -20,7 +20,7 @@
 
 # Introduction to APK format
 
-* APK is ZIP
+* APK is a ZIP file with some potential optimization (uncompressed file aligned to bytes boundaries, ...)
 * Structure
     * META-INF              Signatures and checksums
     * lib                   Architecture dependent binaries
@@ -32,9 +32,7 @@
 
 # Static analysis
 
-## Introduction to Dalvik bytecode and to Smali
-
-### Dalvik bytecode
+## Introduction to the Dalvik bytecode
 
 * Java source code is compiled to Java bytecode (with javac) and then compiled to Dalvik bytecode (with dx)
 * Dalvik has some optimisations with memory consumption in mind
@@ -43,35 +41,64 @@
 
 ---
 
-### Smali
+## Introduction to Smali
 
 * Smali is inspired by the official DEX representation format (optained with dexdump)
+
+### Example of a test() method extracted with dexdump
 
 ```
 $ SDKPATH='/opt/android-sdk/build-tools/17.0.0'
 $ $SDKPATH/dexdump -d ./bin/classes.dex | less
 
-  Virtual methods   -
-  #0              : (in Lch/fixme/status/Main$GetImage;)
-    name          : 'doInBackground'
-    type          : '([Ljava/lang/String;)Landroid/graphics/Bitmap;'
+...
+[00045c] ch.fixme.workshop.MainActivity.test:()V
+0000: iget-boolean v0, v2, Lch/fixme/workshop/MainActivity;.valid:Z // field@0001
+0002: if-eqz v0, 0011 // +000f
+0004: const/high16 v0, #int 2131099648 // #7f06
+0006: invoke-virtual {v2, v0}, Lch/fixme/workshop/MainActivity;.findViewById:(I)Landroid/view/View; // method@0005
+0009: move-result-object v0
+000a: check-cast v0, Landroid/widget/TextView; // type@0004
+000c: const-string v1, "CONGRATULATIONS" // string@0004
+000e: invoke-virtual {v0, v1}, Landroid/widget/TextView;.setText:(Ljava/lang/CharSequence;)V // method@0002
+0011: return-void
+...
+```
 
-  003150: ch.fixme.status.Main.GetImage.doInBackground:([Ljava/lang/String;)Landroid/graphics/Bitmap;
-  003160: new-instance v1, Lch/fixme/status/Net; // type@0044
-  003164: const/4 v2, #int 0 // #0
-  003166: aget-object v2, v4, v2
-  00316a: invoke-direct {v1, v2}, Lch/fixme/status/Net;.<init>:(Ljava/lang/String;)V // method@00b9
-  003170: invoke-virtual {v1}, Lch/fixme/status/Net;.getBitmap:()Landroid/graphics/Bitmap; // method@00ba
-  003176: move-result-object v1
-  003178: return-object v1
-    ...
+---
+
+### Example of the same test() method in Smali
+
+```
+$ java -jar ~/android-dev/baksmali-2.0.3.jar ./bin/classes.dex
+$ less out/ch/fixme/workshop/MainActivity.smali
+
+...
+.method private test()V
+    .registers 3
+    .prologue
+    .line 19
+    iget-boolean v0, p0, Lch/fixme/workshop/MainActivity;->valid:Z
+    if-eqz v0, :cond_11
+    .line 20
+    const/high16 v0, 0x7f060000
+    invoke-virtual {p0, v0}, Lch/fixme/workshop/MainActivity;->findViewById(I)Landroid/view/View;
+    move-result-object v0
+    check-cast v0, Landroid/widget/TextView;
+    const-string v1, "CONGRATULATIONS"
+    invoke-virtual {v0, v1}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
+    .line 22
+    :cond_11
+    return-void
+.end method
+...
 ```
 
 ---
 
 ## Decompress resources and decompile to Smali
 
-* Install the latest apktool
+* Install the latest apktool, which does everything in one go
 
 ```
 cd /tmp
@@ -104,7 +131,7 @@ I: Copying original files...
 ## Modify Smali code
 
 * Open a Smali file
-* 
+* FIXME
 
 ## Repackage application (compile, sign)
 
@@ -123,8 +150,8 @@ $ ~/android/jd-gui insOTP_dex2jar.jar
 
 ## Introduction to Dynamic Dalvik Instrumentation (DDI)
 ## What to exploit ?
-### Use tcpdump
-### Use Dalvik Debug Monitor Server (DDMS)
+## Use tcpdump
+## Use Dalvik Debug Monitor Server (DDMS)
 ## Code Injection using hijack
 ## Android API method hooks
 
@@ -141,6 +168,7 @@ $ ~/android/jd-gui insOTP_dex2jar.jar
 * http://www.milk.com/kodebase/dalvik-docs-mirror/docs/dalvik-bytecode.html
 
 ## Smali
+* https://bitbucket.org/JesusFreke/smali/
 * https://code.google.com/p/Smali/
 * http://forum.xda-developers.com/showthread.php?t=2193735
 

@@ -5,8 +5,9 @@
     tools:context=".MainActivity" >
 
     <TextView
+        android:id="@+id/output"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:text="TRY AGAIN" />
 
 </RelativeLayout>
