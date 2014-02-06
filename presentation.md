@@ -1,4 +1,4 @@
-% Android application reverse engineering
+% Android reverse engineering
 % Jean-Baptiste (Rorist) Aubort
 % 2014-02-13 at FIXME
 
@@ -49,26 +49,22 @@
 
 ```
 $ SDKPATH='/opt/android-sdk/build-tools/17.0.0'
-$ $SDKPATH/dexdump ./bin/classes.dex | less
+$ $SDKPATH/dexdump -d ./bin/classes.dex | less
 
-    Class #1            -
-      Class descriptor  : 'Lch/fixme/status/Main$1;'
-      Access flags      : 0x0000 ()
-      Superclass        : 'Ljava/lang/Object;'
-      Interfaces        -
-      Static fields     -
-      Instance fields   -
-        #0              : (in Lch/fixme/status/Main$1;)
-          name          : 'this$0'
-          type          : 'Lch/fixme/status/Main;'
-          access        : 0x1010 (FINAL SYNTHETIC)
-        #1              : (in Lch/fixme/status/Main$1;)
-          name          : 'val$url'
-          type          : 'Ljava/util/ArrayList;'
-          access        : 0x1010 (FINAL SYNTHETIC)
-      Direct methods    -
-      Virtual methods   -
-  ...
+  Virtual methods   -
+  #0              : (in Lch/fixme/status/Main$GetImage;)
+    name          : 'doInBackground'
+    type          : '([Ljava/lang/String;)Landroid/graphics/Bitmap;'
+
+  003150: ch.fixme.status.Main.GetImage.doInBackground:([Ljava/lang/String;)Landroid/graphics/Bitmap;
+  003160: new-instance v1, Lch/fixme/status/Net; // type@0044
+  003164: const/4 v2, #int 0 // #0
+  003166: aget-object v2, v4, v2
+  00316a: invoke-direct {v1, v2}, Lch/fixme/status/Net;.<init>:(Ljava/lang/String;)V // method@00b9
+  003170: invoke-virtual {v1}, Lch/fixme/status/Net;.getBitmap:()Landroid/graphics/Bitmap; // method@00ba
+  003176: move-result-object v1
+  003178: return-object v1
+    ...
 ```
 
 ---
