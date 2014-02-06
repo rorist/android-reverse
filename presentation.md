@@ -1,9 +1,6 @@
 % Android application reverse engineering
 % Jean-Baptiste (Rorist) Aubort
 % 2014-02-13 at FIXME
-<!--
-pandoc -V theme:Warsaw --variable fontsize=8pt -t beamer -s presentation.md -o presentation.pdf
--->
 
 # Summary
 
