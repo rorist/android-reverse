@@ -6,9 +6,9 @@
 
 * Introduction to APK format
 * Static analysis
-    * Introduction to Dalvik bytecode and to smali
-    * Decompress resources and decompile to smali
-    * Modify smali code
+    * Dalvik bytecode and Smali
+    * Decompress resources and decompile to Smali
+    * Modify Smali code
     * Repackage application (compile, sign)
 * Dynamic analysis
     * Introduction to Dynamic Dalvik Instrumentation (DDI)
@@ -32,7 +32,7 @@
 
 # Static analysis
 
-## Introduction to Dalvik bytecode and to smali
+## Introduction to Dalvik bytecode and to Smali
 
 ### Dalvik bytecode
 
@@ -71,15 +71,43 @@ $ $SDKPATH/dexdump ./bin/classes.dex | less
   ...
 ```
 
+---
 
-## Decompress resources and decompile to smali
+## Decompress resources and decompile to Smali
 
-* Using apktool
+* Use apktool
 
-> 
+```
+$ ~/android/apktool/apktool decode insOTP.apk
+I: Using Apktool 2.0.0-Beta7 on insOTP.apk
+I: Loading resource table...
+I: Decoding AndroidManifest.xml with resources...
+I: Loading resource table from file: /home/rorist/apktool/framework/1.apk
+I: Regular manifest package...
+I: Decoding file-resources...
+I: Decoding values */* XMLs...
+I: Loading resource table...
+I: Baksmaling...
+I: Copying assets and libs...
+I: Copying unknown files/dir...
+I: Copying original files...
+```
 
-## Modify smali code
+---
+
+## Modify Smali code
 ## Repackage application (compile, sign)
+
+## Look at the code with jd-gui (Java Decompiler) and dex2jar
+
+```
+$ ~/android/dex2jar-0.0.7.11/dex2jar.sh ./insOTP.apk
+1 [main] INFO com.googlecode.dex2jar.v3.Main - version:0.0.7.11-SNAPSHOT
+9 [main] INFO com.googlecode.dex2jar.v3.Main - dex2jar ./insOTP.apk -> insOTP_dex2jar.jar
+1990 [main] INFO com.googlecode.dex2jar.v3.Main - Done.
+
+$ ~/android/jd-gui insOTP_dex2jar.jar
+```
 
 #Dynamic analysis
 
@@ -102,5 +130,5 @@ $ $SDKPATH/dexdump ./bin/classes.dex | less
 * http://pallergabor.uw.hu/androidblog/dalvik_opcodes.html
 
 ## Smali
-* https://code.google.com/p/smali/
+* https://code.google.com/p/Smali/
 
