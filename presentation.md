@@ -45,7 +45,7 @@
 
 * Smali is inspired by the official DEX representation format (optained with dexdump)
 
-### Example of a test() method extracted with dexdump
+## Example of a test() method extracted with dexdump
 
 ```
 $ SDKPATH='/opt/android-sdk/build-tools/17.0.0'
@@ -67,7 +67,7 @@ $ $SDKPATH/dexdump -d ./bin/classes.dex | less
 
 ---
 
-### Example of the same test() method in Smali
+## Example of the same test() method in Smali
 
 ```
 $ java -jar ~/android-dev/baksmali-2.0.3.jar ./bin/classes.dex
@@ -101,8 +101,7 @@ $ less out/ch/fixme/workshop/MainActivity.smali
 * Install the latest apktool, which does everything in one go
 
 ```
-cd /tmp
-mkdir apktool; cd apktool
+cd ~; mkdir apktool; cd apktool
 wget -O apktool.jar http://miui.connortumbleson.com/other/apktool/test_versions/apktool_2.0.0b7.jar
 wget https://android-apktool.googlecode.com/git/scripts/linux/apktool
 chmod +x apktool
@@ -111,11 +110,11 @@ chmod +x apktool
 * Use apktool to extract resources and code
 
 ```
-$ /tmp/apktool/apktool decode insOTP.apk
-I: Using Apktool 2.0.0-Beta7 on insOTP.apk
+$ ~/apktool/apktool decode ./bin/example-app-debug.apk
+I: Using Apktool 2.0.0-Beta7 on example-app-debug.apk
 I: Loading resource table...
 I: Decoding AndroidManifest.xml with resources...
-I: Loading resource table from file: /home/rorist/apktool/framework/1.apk
+I: Loading resource table from file: /home/zulu/apktool/framework/1.apk
 I: Regular manifest package...
 I: Decoding file-resources...
 I: Decoding values */* XMLs...
