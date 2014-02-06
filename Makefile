@@ -3,4 +3,4 @@ all:
 	@evince presentation.pdf
 
 clean:
-		@rm presentation.pdf
+	@rm presentation.pdf
