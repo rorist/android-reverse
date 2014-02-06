@@ -4,3 +4,4 @@ all:
 
 clean:
 	@rm presentation.pdf
+	@rm -fr references/example-app/{bin,gen}
