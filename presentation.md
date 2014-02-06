@@ -91,7 +91,7 @@ $ less out/ch/fixme/workshop/MainActivity.smali
 ...
 ```
 
-# Decompress resources and decompile to Smali
+# Use apktool
 
 * Install the latest apktool, which does everything in one go
 
@@ -121,10 +121,10 @@ I: Copying unknown files/dir...
 I: Copying original files...
 ```
 
-# Modify Smali code
+# Modify the application
 
-* Open a Smali file
-* FIXME
+* Open example-app-debug/smali/ch/fixme/workshop/MainActivity.smali
+* Modify the "valid" field at line 7 to true
 
 # Repackage application (compile, sign)
 
