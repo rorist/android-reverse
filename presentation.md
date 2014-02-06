@@ -1,6 +1,6 @@
-% Android reverse engineering
-% Jean-Baptiste (Rorist) Aubort
-% \today
+% Android Reverse Engineering
+% FIXME Hackerspace
+% Jean-Baptiste (Rorist) Aubort - \today
 
 # Summary
 
@@ -96,16 +96,17 @@ $ less out/ch/fixme/workshop/MainActivity.smali
 * Install the latest apktool, which does everything in one go
 
 ```
-cd ~; mkdir apktool; cd apktool
-wget -O apktool.jar http://miui.connortumbleson.com/other/apktool/test_versions/apktool_2.0.0b7.jar
-wget https://android-apktool.googlecode.com/git/scripts/linux/apktool
-chmod +x apktool
+$ cd ~; mkdir apktool; cd apktool
+$ wget -O apktool.jar http://miui.connortumbleson.com/other/apktool/test_versions/apktool_2.0.0b7.jar
+$ wget https://android-apktool.googlecode.com/git/scripts/linux/apktool
+$ chmod +x apktool
 ```
 
 * Use apktool to extract resources and code
 
 ```
 $ ~/apktool/apktool decode ./bin/example-app-debug.apk
+
 I: Using Apktool 2.0.0-Beta7 on example-app-debug.apk
 I: Loading resource table...
 I: Decoding AndroidManifest.xml with resources...
