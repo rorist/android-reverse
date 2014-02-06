@@ -1,3 +1,7 @@
-resources
 presentation.pdf
 *.swp
+resources/example-app/bin
+resources/example-app/gen
+resources/example-app/.classpath
+resources/example-app/*.properties
+resources/example-app/.settings

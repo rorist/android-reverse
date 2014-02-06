@@ -71,10 +71,20 @@ $ $SDKPATH/dexdump -d ./bin/classes.dex | less
 
 ## Decompress resources and decompile to Smali
 
-* Use apktool
+* Install the latest apktool
 
 ```
-$ ~/android/apktool/apktool decode insOTP.apk
+cd /tmp
+mkdir apktool; cd apktool
+wget -O apktool.jar http://miui.connortumbleson.com/other/apktool/test_versions/apktool_2.0.0b7.jar
+wget https://android-apktool.googlecode.com/git/scripts/linux/apktool
+chmod +x apktool
+```
+
+* Use apktool to extract resources and code
+
+```
+$ /tmp/apktool/apktool decode insOTP.apk
 I: Using Apktool 2.0.0-Beta7 on insOTP.apk
 I: Loading resource table...
 I: Decoding AndroidManifest.xml with resources...
@@ -92,6 +102,10 @@ I: Copying original files...
 ---
 
 ## Modify Smali code
+
+* Open a Smali file
+* 
+
 ## Repackage application (compile, sign)
 
 ## Look at the code with jd-gui (Java Decompiler) and dex2jar
@@ -124,7 +138,9 @@ $ ~/android/jd-gui insOTP_dex2jar.jar
 ## Dalvik
 * http://source.android.com/devices/tech/dalvik/dalvik-bytecode.html
 * http://pallergabor.uw.hu/androidblog/dalvik_opcodes.html
+* http://www.milk.com/kodebase/dalvik-docs-mirror/docs/dalvik-bytecode.html
 
 ## Smali
 * https://code.google.com/p/Smali/
+* http://forum.xda-developers.com/showthread.php?t=2193735
 
