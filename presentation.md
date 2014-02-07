@@ -126,17 +126,21 @@ I: Copying original files...
 * Open example-app-debug/smali/ch/fixme/workshop/MainActivity.smali
 * Modify the "valid" field at line 7 to true
 
+FIXME FIXME FIXME
+
 # Repackage application (compile, sign)
 
 # Look at the code with jd-gui (Java Decompiler) and dex2jar
 
 ```
-$ ~/android/dex2jar-0.0.7.11/dex2jar.sh ./insOTP.apk
-1 [main] INFO com.googlecode.dex2jar.v3.Main - version:0.0.7.11-SNAPSHOT
-9 [main] INFO com.googlecode.dex2jar.v3.Main - dex2jar ./insOTP.apk -> insOTP_dex2jar.jar
-1990 [main] INFO com.googlecode.dex2jar.v3.Main - Done.
+$ cd ~/apps/example-app
+$ ant debug
+$ ~/android/dex2jar-0.0.7.11/dex2jar.sh ./bin/example-app-debug.apk
+2 [main] INFO com.googlecode.dex2jar.v3.Main - version:0.0.7.11-SNAPSHOT
+17 [main] INFO com.googlecode.dex2jar.v3.Main - dex2jar ./bin/example-app-debug.apk -> example-app-debug_dex2jar.jar
+141 [main] INFO com.googlecode.dex2jar.v3.Main - Done.
 
-$ ~/android/jd-gui insOTP_dex2jar.jar
+$ ~/android/jd-gui example-app-debug_dex2jar.jar
 ```
 
 # Introduction to Dynamic Dalvik Instrumentation (DDI)
