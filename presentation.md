@@ -159,6 +159,14 @@ $ jd-gui example-app-debug_dex2jar.jar
 
 # Introduction to Dynamic Dalvik Instrumentation (DDI)
 
+## How does this work ?
+
+* DDI transforms Dalvik method to native code using JNI (java native interface)
+* Then it calls the original method from C
+* You have access to everything in C (there is no private/protected method)
+* Injects an .so library to a running Dalvik VM
+    * Since all DVM are forked from the Zygot process, that is were you want to be
+
 ## Code Injection using hijack
 ## Android API method hooks
 
