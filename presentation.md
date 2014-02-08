@@ -109,36 +109,24 @@ $ ln -s ~/apktool/apktool /usr/local/bin/apktool
 $ cd ~/apps/example-app
 $ ant debug #This generates debug certificate
 $ apktool decode ./bin/example-app-debug.apk
-
-I: Using Apktool 2.0.0-Beta7 on example-app-debug.apk
-I: Loading resource table...
-I: Decoding AndroidManifest.xml with resources...
-I: Loading resource table from file: /home/zulu/apktool/framework/1.apk
-I: Regular manifest package...
-I: Decoding file-resources...
-I: Decoding values */* XMLs...
-I: Loading resource table...
-I: Baksmaling...
-I: Copying assets and libs...
-I: Copying unknown files/dir...
-I: Copying original files...
 ```
 
-# Modify the application
+# Modify and repackage the application
 
-* Open example-app-debug/smali/ch/fixme/workshop/MainActivity.smali
+* Open and edit the Main class
+
+```
+$ vim example-app-debug/smali/ch/fixme/workshop/MainActivity.smali
+```
+
 * Find where to modify the "valid" field of line 7 to true
-    * Hint: follow references
-
-FIXME FIXME FIXME
-
-# Repackage application (compile, sign)
+* Repackage, sign
 
 ```
-apktool build example-app-debug
-cd example-app-debug/dist
-jarsigner -digestalg SHA1 -sigalg MD5withRSA -verbose -keystore ~/.android/debug.keystore ./example-app-debug.apk -storepass android androiddebugkey
-adb install ./example-app-debug.apk
+$ apktool build example-app-debug
+$ cd example-app-debug/dist
+$ jarsigner -digestalg SHA1 -sigalg MD5withRSA -verbose -keystore ~/.android/debug.keystore ./example-app-debug.apk -storepass android androiddebugkey
+$ adb install ./example-app-debug.apk
 ```
 
 # Look at the code with jd-gui (Java Decompiler) and dex2jar
@@ -146,10 +134,6 @@ adb install ./example-app-debug.apk
 ```
 $ cd ~/apps/example-app; ant debug
 $ dex2jar.sh ./bin/example-app-debug.apk #FIXME: put the binary in ~/bin or smth in the VM
-2 [main] INFO com.googlecode.dex2jar.v3.Main - version:0.0.7.11-SNAPSHOT
-17 [main] INFO com.googlecode.dex2jar.v3.Main - dex2jar ./bin/example-app-debug.apk -> example-app-debug_dex2jar.jar
-141 [main] INFO com.googlecode.dex2jar.v3.Main - Done.
-
 $ ~/android/jd-gui example-app-debug_dex2jar.jar
 ```
 
@@ -164,17 +148,17 @@ $ ~/android/jd-gui example-app-debug_dex2jar.jar
 #References
 
 ## General
-* https://en.wikipedia.org/wiki/APK_(file_format)
-* https://en.wikipedia.org/wiki/Dalvik_(software)
-* https://github.com/crmulliner/ddi
+* <https://en.wikipedia.org/wiki/APK_(file_format)>
+* <https://en.wikipedia.org/wiki/Dalvik_(software)>
+* <https://github.com/crmulliner/ddi>
 
 ## Dalvik
-* http://source.android.com/devices/tech/dalvik/dalvik-bytecode.html
-* http://pallergabor.uw.hu/androidblog/dalvik_opcodes.html
-* http://www.milk.com/kodebase/dalvik-docs-mirror/docs/dalvik-bytecode.html
+* <http://source.android.com/devices/tech/dalvik/dalvik-bytecode.html>
+* <http://pallergabor.uw.hu/androidblog/dalvik_opcodes.html>
+* <http://www.milk.com/kodebase/dalvik-docs-mirror/docs/dalvik-bytecode.html>
 
 ## Smali
-* https://bitbucket.org/JesusFreke/smali/
-* https://code.google.com/p/Smali/
-* http://forum.xda-developers.com/showthread.php?t=2193735
+* <https://bitbucket.org/JesusFreke/smali/>
+* <https://code.google.com/p/smali/>
+* <http://forum.xda-developers.com/showthread.php?t=2193735>
 
