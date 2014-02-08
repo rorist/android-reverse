@@ -106,7 +106,8 @@ $ ln -s ~/apktool/apktool /usr/local/bin/apktool
 * Use apktool to extract resources and code
 
 ```
-$ cd ~/apps/example-app; ant debug
+$ cd ~/apps/example-app
+$ ant debug #This generates debug certificate
 $ apktool decode ./bin/example-app-debug.apk
 
 I: Using Apktool 2.0.0-Beta7 on example-app-debug.apk
