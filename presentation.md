@@ -100,12 +100,14 @@ $ cd ~; mkdir apktool; cd apktool
 $ wget -O apktool.jar http://miui.connortumbleson.com/other/apktool/test_versions/apktool_2.0.0b7.jar
 $ wget https://android-apktool.googlecode.com/git/scripts/linux/apktool
 $ chmod +x apktool
+$ ln -s ~/apktool/apktool /usr/local/bin/apktool
 ```
 
 * Use apktool to extract resources and code
 
 ```
-$ ~/apktool/apktool decode ./bin/example-app-debug.apk
+$ cd ~/apps/example-app; ant debug
+$ apktool decode ./bin/example-app-debug.apk
 
 I: Using Apktool 2.0.0-Beta7 on example-app-debug.apk
 I: Loading resource table...
@@ -124,18 +126,25 @@ I: Copying original files...
 # Modify the application
 
 * Open example-app-debug/smali/ch/fixme/workshop/MainActivity.smali
-* Modify the "valid" field at line 7 to true
+* Find where to modify the "valid" field of line 7 to true
+    * Hint: follow references
 
 FIXME FIXME FIXME
 
 # Repackage application (compile, sign)
 
+```
+apktool build example-app-debug
+cd example-app-debug/dist
+jarsigner -digestalg SHA1 -sigalg MD5withRSA -verbose -keystore ~/.android/debug.keystore ./example-app-debug.apk -storepass android androiddebugkey
+adb install ./example-app-debug.apk
+```
+
 # Look at the code with jd-gui (Java Decompiler) and dex2jar
 
 ```
-$ cd ~/apps/example-app
-$ ant debug
-$ ~/android/dex2jar-0.0.7.11/dex2jar.sh ./bin/example-app-debug.apk
+$ cd ~/apps/example-app; ant debug
+$ dex2jar.sh ./bin/example-app-debug.apk #FIXME: put the binary in ~/bin or smth in the VM
 2 [main] INFO com.googlecode.dex2jar.v3.Main - version:0.0.7.11-SNAPSHOT
 17 [main] INFO com.googlecode.dex2jar.v3.Main - dex2jar ./bin/example-app-debug.apk -> example-app-debug_dex2jar.jar
 141 [main] INFO com.googlecode.dex2jar.v3.Main - Done.
