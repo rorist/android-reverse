@@ -56,7 +56,7 @@ $ $SDKPATH/dexdump -d ./bin/classes.dex | less
 0006: invoke-virtual {v2, v0}, Lch/fixme/workshop/MainActivity;.findViewById:(I)Landroid/view/View; // method@0005
 0009: move-result-object v0
 000a: check-cast v0, Landroid/widget/TextView; // type@0004
-000c: const-string v1, "CONGRATULATIONS" // string@0004
+000c: const-string v1, "CONGRATZ!" // string@0004
 000e: invoke-virtual {v0, v1}, Landroid/widget/TextView;.setText:(Ljava/lang/CharSequence;)V // method@0002
 0011: return-void
 ...
@@ -82,7 +82,7 @@ $ less out/ch/fixme/workshop/MainActivity.smali
     invoke-virtual {p0, v0}, Lch/fixme/workshop/MainActivity;->findViewById(I)Landroid/view/View;
     move-result-object v0
     check-cast v0, Landroid/widget/TextView;
-    const-string v1, "CONGRATULATIONS"
+    const-string v1, "CONGRATZ!"
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
     .line 22
     :cond_11
@@ -114,34 +114,51 @@ $ apktool decode ./bin/example-app-debug.apk
 # Modify and repackage the application
 
 * Open and edit the Main class
+* Find where to modify the "valid" field of line 7 to true
 
 ```
 $ vim example-app-debug/smali/ch/fixme/workshop/MainActivity.smali
 ```
 
-* Find where to modify the "valid" field of line 7 to true
-* Repackage, sign
+* Repackage and sign
 
 ```
 $ apktool build example-app-debug
 $ cd example-app-debug/dist
-$ jarsigner -digestalg SHA1 -sigalg MD5withRSA -verbose -keystore ~/.android/debug.keystore ./example-app-debug.apk -storepass android androiddebugkey
+$ jarsigner -digestalg SHA1 -sigalg MD5withRSA -verbose \
+    -keystore ~/.android/debug.keystore ./example-app-debug.apk \
+    -storepass android androiddebugkey
 $ adb install ./example-app-debug.apk
 ```
 
-# Look at the code with jd-gui (Java Decompiler) and dex2jar
+# What to exploit ?
+## Use tcpdump
+
+* Start the emulator from the command line, saving all of its traffic in a pcap file
 
 ```
-$ cd ~/apps/example-app; ant debug
-$ dex2jar.sh ./bin/example-app-debug.apk #FIXME: put the binary in ~/bin or smth in the VM
-$ ~/android/jd-gui example-app-debug_dex2jar.jar
+android -avd MyEmulator -tcpdump /tmp/android.cap
+wireshark /tmp/android.cap
+```
+
+## Use Dalvik Debug Monitor Server (DDMS)
+
+* DDMS is part of the Android SDK
+* Start DDMS, select the application and starts monitoring
+* You can monitor threads activity, memory allocation and method calls
+* As well as send the emulator some event (call, network change, etc)
+
+## Look at the code with jd-gui (Java Decompiler) and dex2jar
+
+```
+$ cd ~/apps/example-app
+$ ant debug
+$ dex2jar.sh ./bin/example-app-debug.apk
+$ jd-gui example-app-debug_dex2jar.jar
 ```
 
 # Introduction to Dynamic Dalvik Instrumentation (DDI)
-# What to exploit ?
-## Use tcpdump
-## Use Dalvik Debug Monitor Server (DDMS)
-# Attacks
+
 ## Code Injection using hijack
 ## Android API method hooks
 
