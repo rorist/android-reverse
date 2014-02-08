@@ -17,7 +17,7 @@ public class MainActivity extends Activity {
 
 	private void test() {
 		if (valid) {
-			((TextView) findViewById(R.id.output)).setText("CONGRATULATIONS");
+			((TextView) findViewById(R.id.output)).setText("CONGRATZ!");
 		}
 	}
 
