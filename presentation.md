@@ -21,15 +21,21 @@
 
 # Introduction to APK format
 
-* APK is a ZIP file with some potential optimization (uncompressed file aligned to bytes boundaries, ...)
+* APK is basically a ZIP file, with some optimization (see zipalign)
 * Structure
-    * META-INF              Signatures and checksums
+    * AndroidManifest.xml   Definitions of application, activities, services, permissions, api level
+    * classes.dex           Java class compiled to Dalvik bytecode
+    * resources.asc         Resources index (generated from R.java)
+    * res                   Compressed resources (xml, images)
     * lib                   Architecture dependent binaries
-    * res                   Uncompiled resources
-    * assets                Application assets (resources without localisation)
-    * AndroidManifest.xml   Application description
-    * classes.dex           Application code in Dalvik bytecode
-    * resources.asc         Compiled resources (strings, images, ...)
+    * assets                Application assets (resources without localization)
+    * META-INF              Signatures and checksums
+* aapt is the sdk tool used to manipulate APKs (package, extract information, ..)
+```
+$ aapt dump strings example-app-debug.apk #dump strings from the resources table
+$ aapt dump permissions example-app-debug.apk
+$ aapt dump resources example-app-debug.apk
+```
 
 # Introduction to the Dalvik bytecode
 
