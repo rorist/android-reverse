@@ -41,8 +41,8 @@ $ aapt dump resources example-app-debug.apk
 
 * Java source code is compiled to Java bytecode (with javac) and then compiled to Dalvik bytecode (with dx)
 * Dalvik has some optimisations with memory consumption in mind
-    * No stack, direct access to variables
-    * FIXME
+* No stack, direct access to variables
+* FIXME
 
 # Introduction to Smali
 
@@ -78,21 +78,21 @@ $ less out/ch/fixme/workshop/MainActivity.smali
 
 ...
 .method private test()V
-    .registers 3
-    .prologue
-    .line 19
-    iget-boolean v0, p0, Lch/fixme/workshop/MainActivity;->valid:Z
-    if-eqz v0, :cond_11
-    .line 20
-    const/high16 v0, 0x7f060000
-    invoke-virtual {p0, v0}, Lch/fixme/workshop/MainActivity;->findViewById(I)Landroid/view/View;
-    move-result-object v0
-    check-cast v0, Landroid/widget/TextView;
-    const-string v1, "CONGRATZ!"
-    invoke-virtual {v0, v1}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
-    .line 22
-    :cond_11
-    return-void
+.registers 3
+.prologue
+.line 19
+iget-boolean v0, p0, Lch/fixme/workshop/MainActivity;->valid:Z
+if-eqz v0, :cond_11
+.line 20
+const/high16 v0, 0x7f060000
+invoke-virtual {p0, v0}, Lch/fixme/workshop/MainActivity;->findViewById(I)Landroid/view/View;
+move-result-object v0
+check-cast v0, Landroid/widget/TextView;
+const-string v1, "CONGRATZ!"
+invoke-virtual {v0, v1}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
+.line 22
+:cond_11
+return-void
 .end method
 ...
 ```
@@ -119,6 +119,7 @@ $ apktool decode ./bin/example-app-debug.apk
 
 # Modify and repackage the application
 
+## Example 1
 * Open and edit the Main class
 * Find where to modify the "valid" field of line 7 to true
 
@@ -136,6 +137,11 @@ $ jarsigner -digestalg SHA1 -sigalg MD5withRSA -verbose \
     -storepass android androiddebugkey
 $ adb install ./example-app-debug.apk
 ```
+
+## Example 2
+
+* Decompile to smali
+* Print the key somewhere
 
 # What to exploit ?
 ## Use tcpdump

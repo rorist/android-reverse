@@ -11,10 +11,13 @@ import java.math.BigInteger;
 
 public class MainActivity extends Activity {
 
+    private String key = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        key = getSerial();
         findViewById(R.id.check_btn).setOnClickListener(
             new View.OnClickListener() {
                 public void onClick(View v) {
@@ -27,7 +30,7 @@ public class MainActivity extends Activity {
 
     private boolean checkSerial(){
         String serial = ((EditText)findViewById(R.id.input)).getText().toString();
-        if (getSerial().equals(serial)) return true;
+        if (key.equals(serial)) return true;
         return false;
     }
 
