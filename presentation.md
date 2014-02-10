@@ -2,6 +2,8 @@
 % FIXME Hackerspace
 % Jean-Baptiste (Rorist) Aubort - \today
 
+![Inside the Droid](resources/android-re.jpg)
+
 # Summary
 
 * Introduction to APK format
