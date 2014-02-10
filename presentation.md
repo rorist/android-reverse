@@ -12,11 +12,11 @@
     * Decompress resources and decompile to Smali
     * Modify Smali code
     * Repackage application (compile, sign)
-* Dynamic analysis
-    * Introduction to Dynamic Dalvik Instrumentation (DDI)
     * What to exploit ?
         * Use tcpdump
         * Use Dalvik Debug Monitor Server (DDMS)
+* Dynamic analysis
+    * Introduction to Dynamic Dalvik Instrumentation (DDI)
     * Attacks
         * Code Injection using hijack
         * Android API method hooks
