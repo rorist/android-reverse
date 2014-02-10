@@ -47,6 +47,17 @@ $ aapt dump resources example-app-debug.apk
 # Introduction to Smali
 
 * Smali is inspired by the official DEX representation format (optained with dexdump)
+* Invoke a (private) method and copy the result to register
+
+```
+invoke-direct {p0}, , Lch/fixme/workshop2/MainActivity;->checkSerial()Z #call a method
+move-result v0 #move the result of the last invoke to v0
+```
+* v0 is a local register, p0 is a parameter register
+* The method name is constructed like this: Lpackage/name/ObjectName;
+    * where L=object type and ; is the end of the object name
+    * parameters type are represented between (). (III) would be 3 integers parameters
+* Return types are represented as letters after the method name: Z=boolan
 
 ## Example of a test() method extracted with dexdump
 
@@ -197,5 +208,6 @@ $ jd-gui example-app-debug_dex2jar.jar
 ## Smali
 * <https://bitbucket.org/JesusFreke/smali/>
 * <https://code.google.com/p/smali/>
+* <https://code.google.com/p/smali/w/list>
 * <http://forum.xda-developers.com/showthread.php?t=2193735>
 
