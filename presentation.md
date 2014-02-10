@@ -73,18 +73,13 @@ invoke-direct {p0}, Lch/fixme/workshop2/MainActivity;->checkSerial()Z
 * local registers are reset when invoke is called
 * The first parameter of a method is always a reference to its object
 * The method signature is constructed like this: Lpackage/name/ObjectName;
+* Types in brakets one after the other: (ILjava/lang/String) = (int, String)
 
 ## Valid types:
 
 * V = void - can only be used for return types
-* Z = boolean
-* B = byte
-* S = short
-* C = char
-* I = int
-* J = long (64 bits)
-* F = float
-* D = double (64 bits)
+* Z = boolean, B = byte, S = short, C = char
+* I = int, J = long (64 bits), F = float, D = double (64 bits)
 
 # Introduction to Smali
 
