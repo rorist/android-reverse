@@ -63,31 +63,28 @@ $ aapt dump resources example-app-debug.apk
 # Introduction to Smali
 
 ## Smali is based on the DEX format obtained with dexdump
-* Invoke a (private) method and copy the result to register
+* Invoke a (private) method
 
 ```
 invoke-direct {p0}, Lch/fixme/workshop2/MainActivity;->checkSerial()Z
-move-result v0 #move the result of the last invoke to v0
 ```
 
 * v0 is a local register, p0 is a parameter register
 * local registers are reset when invoke is called
 * The first parameter of a method is always a reference to its object
 * The method signature is constructed like this: Lpackage/name/ObjectName;
-* where L=object type and ; is the end of the object name
 
-## Return types are represented as letters after the method name: Z=boolan
+## Valid types:
 
-* Valid types:
-    * V = void - can only be used for return types
-    * Z = boolean
-    * B = byte
-    * S = short
-    * C = char
-    * I = int
-    * J = long (64 bits)
-    * F = float
-    * D = double (64 bits)
+* V = void - can only be used for return types
+* Z = boolean
+* B = byte
+* S = short
+* C = char
+* I = int
+* J = long (64 bits)
+* F = float
+* D = double (64 bits)
 
 # Introduction to Smali
 
