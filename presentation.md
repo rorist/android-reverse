@@ -41,9 +41,15 @@ $ aapt dump resources example-app-debug.apk
 
 # Introduction to the Dalvik VM
 
+## History
+
 * Dalvik is a town in Iceland, Smali means assembler in Icelandic :)
+* It has been developed by Android Inc. which was aquired by Google in 2007
+
+## Technology
+
 * Dalvik has some optimisations with memory consumption in mind
-* No stack, register based VM -> Less instruction
+* No stack, register based VM -> Less instructions but bigger filesize
 * Java source code is compiled to Java bytecode (with javac) and then compiled to Dalvik bytecode (with dx)
 * Dex is compressed (code reuse)
 * Zygote model:
@@ -54,7 +60,7 @@ $ aapt dump resources example-app-debug.apk
 
 # Introduction to Smali
 
-* Smali is based on the DEX format obtained with dexdump
+## Smali is based on the DEX format obtained with dexdump
 * Invoke a (private) method and copy the result to register
 
 ```
@@ -66,9 +72,10 @@ move-result v0 #move the result of the last invoke to v0
 * local registers are reset when invoke is called
 * The first parameter of a method is always a reference to its object
 * The method signature is constructed like this: Lpackage/name/ObjectName;
-    * where L=object type and ; is the end of the object name
-    * parameters type are represented between ()
-* Return types are represented as letters after the method name: Z=boolan
+* where L=object type and ; is the end of the object name
+
+## Return types are represented as letters after the method name: Z=boolan
+
 * Valid types:
     * V = void - can only be used for return types
     * Z = boolean
