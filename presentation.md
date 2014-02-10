@@ -23,43 +23,62 @@
 
 * APK is basically a ZIP file, with some optimization (see zipalign)
 * Structure
-    * AndroidManifest.xml   Definitions of application, activities, services, permissions, api level
+    * AndroidManifest.xml   Definitions of the application
     * classes.dex           Java class compiled to Dalvik bytecode
     * resources.asc         Resources index (generated from R.java)
     * res                   Compressed resources (xml, images)
     * lib                   Architecture dependent binaries
-    * assets                Application assets (resources without localization)
     * META-INF              Signatures and checksums
-* aapt is the sdk tool used to manipulate APKs (package, extract information, ..)
+* aapt is an sdk tool to APKs (package, extract information, ..)
+
 ```
 $ aapt dump strings example-app-debug.apk #dump strings from the resources table
 $ aapt dump permissions example-app-debug.apk
 $ aapt dump resources example-app-debug.apk
 ```
 
-# Introduction to the Dalvik bytecode
+# Introduction to the Dalvik VM
 
 * Dalvik is a town in Iceland, Smali means assembler in Icelandic :)
-* Java source code is compiled to Java bytecode (with javac) and then compiled to Dalvik bytecode (with dx)
 * Dalvik has some optimisations with memory consumption in mind
 * No stack, register based VM -> Less instruction
+* Java source code is compiled to Java bytecode (with javac) and then compiled to Dalvik bytecode (with dx)
 * Dex is compressed (code reuse)
+* Zygote model:
+    * Zygote process is spawned after boot time, instancating a DVM
+    * This VM loads core libraries from Android
+    * When an app is started, it forks from Zygote
+    * App share core libraries, and copy-on-write to their own process when needed
 
 # Introduction to Smali
 
-* Smali is inspired by the official DEX representation format (optained with dexdump)
+* Smali is based on the DEX format obtained with dexdump
 * Invoke a (private) method and copy the result to register
 
 ```
-invoke-direct {p0}, , Lch/fixme/workshop2/MainActivity;->checkSerial()Z #call a method
+invoke-direct {p0}, Lch/fixme/workshop2/MainActivity;->checkSerial()Z
 move-result v0 #move the result of the last invoke to v0
 ```
+
 * v0 is a local register, p0 is a parameter register
+* local registers are reset when invoke is called
 * The first parameter of a method is always a reference to its object
-* The method name is constructed like this: Lpackage/name/ObjectName;
+* The method signature is constructed like this: Lpackage/name/ObjectName;
     * where L=object type and ; is the end of the object name
-    * parameters type are represented between (). (III) would be 3 integers parameters
+    * parameters type are represented between ()
 * Return types are represented as letters after the method name: Z=boolan
+* Valid types:
+    * V = void - can only be used for return types
+    * Z = boolean
+    * B = byte
+    * S = short
+    * C = char
+    * I = int
+    * J = long (64 bits)
+    * F = float
+    * D = double (64 bits)
+
+# Introduction to Smali
 
 ## Example of a test() method extracted with dexdump
 
@@ -69,19 +88,19 @@ $ $SDKPATH/dexdump -d ./bin/classes.dex | less
 
 ...
 [00045c] ch.fixme.workshop.MainActivity.test:()V
-0000: iget-boolean v0, v2, Lch/fixme/workshop/MainActivity;.valid:Z // field@0001
+0000: iget-boolean v0, v2, Lch/fixme/workshop/MainActivity;.valid:Z
 0002: if-eqz v0, 0011 // +000f
 0004: const/high16 v0, #int 2131099648 // #7f06
-0006: invoke-virtual {v2, v0}, Lch/fixme/workshop/MainActivity;.findViewById:(I)Landroid/view/View; // method@0005
+0006: invoke-virtual {v2, v0}, L..;.findViewById:(I)Landroid/view/View;
 0009: move-result-object v0
 000a: check-cast v0, Landroid/widget/TextView; // type@0004
 000c: const-string v1, "CONGRATZ!" // string@0004
-000e: invoke-virtual {v0, v1}, Landroid/widget/TextView;.setText:(Ljava/lang/CharSequence;)V // method@0002
+000e: invoke-virtual {v0, v1}, L..;.setText:(Ljava/lang/CharSequence;)V
 0011: return-void
 ...
 ```
 
----
+# Introduction to Smali
 
 ## Example of the same test() method in Smali
 
@@ -98,11 +117,11 @@ iget-boolean v0, p0, Lch/fixme/workshop/MainActivity;->valid:Z
 if-eqz v0, :cond_11
 .line 20
 const/high16 v0, 0x7f060000
-invoke-virtual {p0, v0}, Lch/fixme/workshop/MainActivity;->findViewById(I)Landroid/view/View;
+invoke-virtual {p0, v0}, L..;->findViewById(I)Landroid/view/View;
 move-result-object v0
 check-cast v0, Landroid/widget/TextView;
 const-string v1, "CONGRATZ!"
-invoke-virtual {v0, v1}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
+invoke-virtual {v0, v1}, L..;->setText(Ljava/lang/CharSequence;)V
 .line 22
 :cond_11
 return-void
@@ -116,7 +135,7 @@ return-void
 
 ```
 $ cd ~; mkdir apktool; cd apktool
-$ wget -O apktool.jar http://miui.connortumbleson.com/other/apktool/test_versions/apktool_2.0.0b7.jar
+$ wget -O apktool.jar http://goo.gl/9ne870
 $ wget https://android-apktool.googlecode.com/git/scripts/linux/apktool
 $ chmod +x apktool
 $ ln -s ~/apktool/apktool /usr/local/bin/apktool
@@ -134,12 +153,7 @@ $ apktool decode ./bin/example-app-debug.apk
 
 ## Example 1
 * Open and edit the Main class
-* Find where to modify the "valid" field of line 7 to true
-
-```
-$ vim example-app-debug/smali/ch/fixme/workshop/MainActivity.smali
-```
-
+* Find where to modify the "valid" field in MainActivity.smali:7 to true
 * Repackage and sign
 
 ```
@@ -154,18 +168,21 @@ $ adb install ./example-app-debug.apk
 ## Example 2
 
 * Decompile to smali
-* Print the key somewhere, using this debug code (where TEST is replaced with the key)
+* Print the key somewhere, using this debug code
 
 ```
-const/4 v0, 0x0 
+const/4 v0, 0x0
 const-string v1, "TEST"
-invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+invoke-static {v0, v1}, Landroid/util/Log;
+    ->e(Ljava/lang/String;Ljava/lang/String;)I
 ```
+
+* Repackage and test
 
 # What to exploit ?
 ## Use tcpdump
 
-* Start the emulator from the command line, saving all of its traffic in a pcap file
+* Start the emulator from the CLI, saving all of its traffic in a pcap file
 
 ```
 android -avd MyEmulator -tcpdump /tmp/android.cap
@@ -211,6 +228,8 @@ $ jd-gui example-app-debug_dex2jar.jar
 * <http://source.android.com/devices/tech/dalvik/dalvik-bytecode.html>
 * <http://pallergabor.uw.hu/androidblog/dalvik_opcodes.html>
 * <http://www.milk.com/kodebase/dalvik-docs-mirror/docs/dalvik-bytecode.html>
+* <http://davidehringer.com/software/android/The_Dalvik_Virtual_Machine.pdf>
+* <http://projekter.aau.dk/projekter/files/63640573/rapport.pdf>
 
 ## Smali
 * <https://bitbucket.org/JesusFreke/smali/>
@@ -218,6 +237,8 @@ $ jd-gui example-app-debug_dex2jar.jar
 * <https://code.google.com/p/smali/w/list>
 * <http://forum.xda-developers.com/showthread.php?t=2193735>
 * <http://wiki.smartphonefrance.info/reversing-android.ashx>
+
+#References
 
 ## Dynamic instrumentation
 * <http://www.cydiasubstrate.com/>
