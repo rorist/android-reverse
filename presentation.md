@@ -39,10 +39,11 @@ $ aapt dump resources example-app-debug.apk
 
 # Introduction to the Dalvik bytecode
 
+* Dalvik is a town in Iceland, Smali means assembler in Icelandic :)
 * Java source code is compiled to Java bytecode (with javac) and then compiled to Dalvik bytecode (with dx)
 * Dalvik has some optimisations with memory consumption in mind
-* No stack, direct access to variables
-* FIXME
+* No stack, register based VM -> Less instruction
+* Dex is compressed (code reuse)
 
 # Introduction to Smali
 
@@ -205,7 +206,6 @@ $ jd-gui example-app-debug_dex2jar.jar
 ## General
 * <https://en.wikipedia.org/wiki/APK_(file_format)>
 * <https://en.wikipedia.org/wiki/Dalvik_(software)>
-* <https://github.com/crmulliner/ddi>
 
 ## Dalvik
 * <http://source.android.com/devices/tech/dalvik/dalvik-bytecode.html>
@@ -217,4 +217,9 @@ $ jd-gui example-app-debug_dex2jar.jar
 * <https://code.google.com/p/smali/>
 * <https://code.google.com/p/smali/w/list>
 * <http://forum.xda-developers.com/showthread.php?t=2193735>
+* <http://wiki.smartphonefrance.info/reversing-android.ashx>
+
+## Dynamic instrumentation
+* <http://www.cydiasubstrate.com/>
+* <https://github.com/crmulliner/ddi>
 
