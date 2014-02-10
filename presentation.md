@@ -54,6 +54,7 @@ invoke-direct {p0}, , Lch/fixme/workshop2/MainActivity;->checkSerial()Z #call a 
 move-result v0 #move the result of the last invoke to v0
 ```
 * v0 is a local register, p0 is a parameter register
+* The first parameter of a method is always a reference to its object
 * The method name is constructed like this: Lpackage/name/ObjectName;
     * where L=object type and ; is the end of the object name
     * parameters type are represented between (). (III) would be 3 integers parameters
@@ -152,7 +153,13 @@ $ adb install ./example-app-debug.apk
 ## Example 2
 
 * Decompile to smali
-* Print the key somewhere
+* Print the key somewhere, using this debug code (where TEST is replaced with the key)
+
+```
+const/4 v0, 0x0 
+const-string v1, "TEST"
+invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+```
 
 # What to exploit ?
 ## Use tcpdump
