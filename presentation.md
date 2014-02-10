@@ -1,4 +1,4 @@
-% Android Reverse Engineering
+% Android Reverse Engineering 101
 % FIXME Hackerspace
 % Jean-Baptiste (Rorist) Aubort - \today
 
@@ -20,6 +20,8 @@
     * Attacks
         * Code Injection using hijack
         * Android API method hooks
+
+![Skating droids](resources/droid.png)
 
 # Introduction to APK format
 
