@@ -171,10 +171,12 @@ $ adb install ./example-app-debug.apk
 ## Example 2
 
 * Decompile to smali
-* Print the key somewhere, using this debug code
+* Print the key somewhere, using this debug code (you also have to modify 
+the .locals directive to match the number of local register accessible in 
+the method
 
 ```
-const/4 v0, 0x0
+const-string v0, "KEY"
 const-string v1, "TEST"
 invoke-static {v0, v1}, Landroid/util/Log;
     ->e(Ljava/lang/String;Ljava/lang/String;)I
