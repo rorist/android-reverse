@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.util.Log;
+import android.widget.Toast;
 import java.security.SecureRandom;
 import java.math.BigInteger;
 
@@ -23,6 +24,8 @@ public class MainActivity extends Activity {
                 public void onClick(View v) {
                     if(checkSerial()){
                         ((TextView)findViewById(R.id.output)).setText("CONGRATZ!");
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Wrong serial", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
