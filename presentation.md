@@ -27,12 +27,16 @@
 
 * APK is basically a ZIP file, with some optimization (see zipalign)
 * Structure
-    * AndroidManifest.xml   Definitions of the application
-    * classes.dex           Java class compiled to Dalvik bytecode
-    * resources.asc         Resources index (generated from R.java)
-    * res                   Compressed resources (xml, images)
-    * lib                   Architecture dependent binaries
-    * META-INF              Signatures and checksums
+
+```
+ AndroidManifest.xml...Definitions of the application
+ classes.dex...........Java class compiled to Dalvik bytecode
+ resources.asc.........Resources index (generated from R.java)
+ res...................Compressed resources (xml, images)
+ lib...................Architecture dependent binaries
+ META-INF..............Signatures and checksums
+```
+
 * aapt is an sdk tool to APKs (package, extract information, ..)
 
 ```
