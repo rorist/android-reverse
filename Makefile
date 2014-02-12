@@ -10,4 +10,4 @@ pdf:
 
 clean:
 	rm presentation.pdf
-	rm -fr resources/example-app{1..2}/{bin,gen}
+	rm -fr resources/example-app{0..2}/{bin,gen}
