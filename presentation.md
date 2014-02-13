@@ -166,6 +166,8 @@ $ apktool decode ./bin/example-app-debug.apk
 ```
 $ apktool build example-app-debug
 $ cd example-app-debug/dist
+# Install opendjk-7-jdk and use jarsigner from it
+# update-alternative --config jarsigner #on debian
 $ jarsigner -digestalg SHA1 -sigalg MD5withRSA -verbose \
     -keystore ~/.android/debug.keystore ./example-app-debug.apk \
     -storepass android androiddebugkey
