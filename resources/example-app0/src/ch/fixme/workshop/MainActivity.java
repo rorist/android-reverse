@@ -29,6 +29,10 @@ public class MainActivity extends Activity {
         Log.v("KEY", obj.toString());
     }
 
+    private void LogLong(long l) {
+        Log.v("KEY", String.valueOf(l));
+    }
+
     private void PrivateDeadMethod(){
         Toast.makeText(getApplicationContext(), "Private Dead", Toast.LENGTH_SHORT).show();
     }
