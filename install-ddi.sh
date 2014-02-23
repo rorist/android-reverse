@@ -31,3 +31,5 @@ adb pull /system/lib/libdvm.so
 cd ~/ddi/dalvikhook/jni
 ndk-build
 
+# To build the examples, add -w to LOCAL_CFLAGS in the Android.mk files (newest version of the ndk check for security)
+# LOCAL_CFLAGS := -g -w
