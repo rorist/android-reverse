@@ -5,3 +5,4 @@ resources/*/gen
 resources/*/.classpath
 resources/*/*.properties
 resources/*/.settings
+resources/presentations/presentation.pdf
