@@ -266,7 +266,7 @@ dvmUseJNIBridge(met, dalvik_func_hook);
 
 # Introduction to Dynamic Dalvik Instrumentation (DDI)
 
-## Android API method hooks
+## I am hooking, they are hating
 
 * Hooking and calling the original function, using LibDalvikHook
 
