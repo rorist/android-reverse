@@ -245,6 +245,21 @@ CallObjectMethod() // call a method
 # Introduction to Dynamic Dalvik Instrumentation (DDI)
 
 ## Code Injection using hijack
+
+* Steps
+    * Push library (.so) and Dalvik code (.dex) to /data/local/tmp
+    * Enable dex loading: chmod 777 /data/dalvik-cache/
+    * ./hijack -p PID -l /data/local/tmp/lib.so
+* This injects the library lib.so into the running process with PID
+* But we want to inject before app is loaded, that is why we inject into Zygote!
+
+```
+PID=$(adb shell ps | grep zygote | awk '{print $2}')
+adb shell "./hijack -p $PID -l lib.so -s org.mulliner.collin.work"
+```
+
+# Introduction to Dynamic Dalvik Instrumentation (DDI)
+
 ## Android API method hooks
 
 * Find and load the Class
