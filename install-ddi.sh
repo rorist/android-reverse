@@ -7,10 +7,10 @@ echo 'PATH=$PATH:~/android-ndk-r9c/' >> .bashrc
 
 # Run emulator
 emulator -avd Android-2.3&
-echo Starting emulator (wait 60s) .
+echo -n 'Starting emulator (wait 60s) .'
 for i in $(seq 60); do
     sleep 1
-    echo .
+    echo -n '.'
 done
 
 # Install ADBI
