@@ -218,16 +218,73 @@ $ jd-gui example-app-debug_dex2jar.jar
 
 # Introduction to Dynamic Dalvik Instrumentation (DDI)
 
-## How does this work ?
+## JNI introduction
 
+* Provides an interface between native code and Java
+* Call JAVA methods from C and vice-versa
+* Some JNI functions:
+
+```
+FindClass()        // obtain class reference
+NewObject()        // create a new class object
+GetMethodId()      // get method
+CallObjectMethod() // call a method
+```
+## How does DDI work ?
+
+* Based on ADBI (Android Dynamic Binary Instrumentation)
+    * Injects binary at run time
+    * Hijack: library (shared object) injection to a running PID
+    * LibBase: 
 * DDI transforms Dalvik method to native code using JNI (java native interface)
 * Then it calls the original method from C
 * You have access to everything in C (there is no private/protected method)
 * Injects an .so library to a running Dalvik VM
     * Since all DVM are forked from the Zygot process, that is were you want to be
 
+# Introduction to Dynamic Dalvik Instrumentation (DDI)
+
 ## Code Injection using hijack
 ## Android API method hooks
+
+* Find and load the Class
+
+```
+cls = dvmFindLoadedClass("Ljava/lang/String;");
+met = dvmFindVirtualMethodHierByDescriptor(cls, 
+    "compareTo", "(Ljava/lang/String;)I");
+```
+
+* Create a hook function and bind String.compareTo() to it
+
+```
+int dalvik_func_hook(JNIEnv *env, jobject this, jobject str) {
+    /* evil code */
+}
+dvmUseJNIBridge(met, dalvik_func_hook);
+```
+
+# Introduction to Dynamic Dalvik Instrumentation (DDI)
+
+## Android API method hooks
+
+* Hooking and calling the original function, using LibDalvikHook
+
+```
+struct dalvik_hook_t h;   // hook data, remembers stuff for you
+// setup the hook
+dalvik_hook_setup(
+   &h,                       // hook data
+   "Ljava/lang/String;",     // class name 
+   "compareTo",              // method name 
+   "(Ljava/lang/String;)I",  // method signature 
+   2, // insSize (need to calculate that in your head! LOL) 
+   hook_func_compareto       // hook function
+);
+// place hook
+dalvik_hook(&libdhook, &h);
+```
+
 
 #References
 
