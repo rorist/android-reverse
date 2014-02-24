@@ -236,7 +236,8 @@ CallObjectMethod() // call a method
     * Injects binary at run time
     * Hijack: library (shared object) injection to a running PID
     * LibBase: 
-* DDI transforms Dalvik method to native code using JNI (java native interface)
+* ADBI transforms Dalvik method to native code using JNI (java native interface)
+* DDI provides helpers for hooking dalvik methods, importing dex classes at run time
 * Then it calls the original method from C
 * You have access to everything in C (there is no private/protected method)
 * Injects an .so library to a running Dalvik VM
