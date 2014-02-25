@@ -218,18 +218,15 @@ $ jd-gui example-app-debug_dex2jar.jar
 
 # Introduction to Dynamic Dalvik Instrumentation (DDI)
 
-## JNI introduction
+## JNI/NDK introduction
 
-* Provides an interface between native code and Java
-* Call JAVA methods from C and vice-versa
-* Some JNI functions:
+* NDK provides tools to work with native code
+    * Full access to Android SDK
+    * Cross compilation for ARM
+    * Performances of native code is now balanced since JIT appeared (Froyo)
+* JNI is an interface between native code and Java
+    * Call JAVA methods from C and vice-versa
 
-```
-FindClass()        // obtain class reference
-NewObject()        // create a new class object
-GetMethodId()      // get method
-CallObjectMethod() // call a method
-```
 ## How does DDI work ?
 
 * Based on ADBI (Android Dynamic Binary Instrumentation)
