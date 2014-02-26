@@ -1,7 +1,8 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:gravity="center_vertical"
     tools:context=".MainActivity" >
 
@@ -12,4 +13,11 @@
         android:gravity="center"
         android:textSize="18pt" />
 
-</RelativeLayout>
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="fill_parent"
+        android:layout_height="64dip"
+        android:text="Click me"
+        android:onClick="click" />
+
+</LinearLayout>

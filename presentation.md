@@ -258,27 +258,6 @@ adb shell "./hijack -p $PID -l lib.so -s org.mulliner.collin.work"
 
 # Introduction to Dynamic Dalvik Instrumentation (DDI)
 
-## Android API method hooks
-
-* Find and load the Class
-
-```
-cls = dvmFindLoadedClass("Ljava/lang/String;");
-met = dvmFindVirtualMethodHierByDescriptor(cls, 
-    "compareTo", "(Ljava/lang/String;)I");
-```
-
-* Create a hook function and bind String.compareTo() to it
-
-```
-int dalvik_func_hook(JNIEnv *env, jobject this, jobject str) {
-    /* evil code */
-}
-dvmUseJNIBridge(met, dalvik_func_hook);
-```
-
-# Introduction to Dynamic Dalvik Instrumentation (DDI)
-
 ## I am hooking, they are hating
 
 * Hooking and calling the original function, using LibDalvikHook
@@ -298,6 +277,26 @@ dalvik_hook_setup(
 dalvik_hook(&libdhook, &h);
 ```
 
+# Introduction to Dynamic Dalvik Instrumentation (DDI)
+
+## Android API method hooks
+
+* Find and load the Class
+
+```
+cls = dvmFindLoadedClass("Ljava/lang/String;");
+met = dvmFindVirtualMethodHierByDescriptor(cls, 
+    "compareTo", "(Ljava/lang/String;)I");
+```
+
+* Create a hook function and bind String.compareTo() to it
+
+```
+int dalvik_func_hook(JNIEnv *env, jobject this, jobject str) {
+    /* evil code */
+}
+dvmUseJNIBridge(met, dalvik_func_hook);
+```
 
 #References
 
