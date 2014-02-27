@@ -253,7 +253,8 @@ $ jd-gui example-app-debug_dex2jar.jar
 
 ```
 PID=$(adb shell ps | grep zygote | awk '{print $2}')
-adb shell "./hijack -p $PID -l lib.so -s org.mulliner.collin.work"
+adb shell "/data/local/tmp/hijack -p $PID -l /data/local/tmp/lib.so \
+             -s org.mulliner.collin.work"
 ```
 
 # Introduction to Dynamic Dalvik Instrumentation (DDI)
@@ -264,17 +265,42 @@ adb shell "./hijack -p $PID -l lib.so -s org.mulliner.collin.work"
 
 ```
 struct dalvik_hook_t h;   // hook data, remembers stuff for you
+static struct dexstuff_t libdhook;
 // setup the hook
 dalvik_hook_setup(
-   &h,                       // hook data
-   "Ljava/lang/String;",     // class name 
-   "compareTo",              // method name 
-   "(Ljava/lang/String;)I",  // method signature 
-   2, // insSize (need to calculate that in your head! LOL) 
-   hook_func_compareto       // hook function
+   &h,                                  // hook data
+   "Lch/fixme/workshop3/MainActivity;", // class name
+   "test",                              // method name
+   "()Ljava/lang/String;",              // method signature
+   1,                                   // insSize
+   hook_func_test                       // hook function
 );
 // place hook
 dalvik_hook(&libdhook, &h);
+```
+
+# Introduction to Dynamic Dalvik Instrumentation (DDI)
+
+## Place the hooking function
+
+```
+static jstring hook_func_test(JNIEnv *env, jobject this) {
+    return (*env)->NewStringUTF(env, "IM HOOKING");
+}
+```
+
+## I am hooking, they are hating
+
+* Compile and exploit
+
+```
+cd jni
+ndk-build
+cd ..
+ant debug install
+adb push libs/armeabi/libtest.so /data/local/tmp/
+PID=$(adb shell ps | grep workshop3 | awk '{print $2}')
+adb shell "/data/local/tmp/hijack -p $PID -l /data/local/tmp/libtest.so"
 ```
 
 # Introduction to Dynamic Dalvik Instrumentation (DDI)
