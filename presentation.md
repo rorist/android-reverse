@@ -232,7 +232,7 @@ $ jd-gui example-app-debug_dex2jar.jar
 * Based on ADBI (Android Dynamic Binary Instrumentation)
     * Injects binary at run time
     * Hijack: library (shared object) injection to a running PID
-    * LibBase: 
+    * LibBase: Hook/unhook
 * ADBI transforms Dalvik method to native code using JNI (java native interface)
 * DDI provides helpers for hooking dalvik methods, importing dex classes at run time
 * Then it calls the original method from C
