@@ -11,6 +11,7 @@ pdf:
 clean:
 	rm presentation.pdf resources/presentations/presentation.pdf
 	rm -fr resources/example-app{0..2}/{bin,gen}
+	rm -fr resources/example-app-ddi/{bin,gen,libs,obj}
 
 app:
 	for i in {0..2}; do \
